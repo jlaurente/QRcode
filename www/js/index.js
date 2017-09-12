@@ -1,9 +1,4 @@
-var myscan = null;
-var myclueJSON = null;
-
-var myscan = scanner.scan(startScan(result), handleError(error)); //call scanning function and assign result JSON to myscan variable
-alert(myscan); //returns undefined
-
+var resultDiv;
 document.addEventListener("deviceready", init, false);
 function init() {
     document.querySelector("#startScan").addEventListener("touchend", startScan, false);
@@ -12,7 +7,7 @@ function init() {
 function startScan() {
     cordova.plugins.barcodeScanner.scan(
         function (result) {
-             var myresult = result.text;
+			  var myresult = result.text;
 			  var obj= JSON.parse(myresult);
 			  //fetch event id from barcode
 			  var myeventid = obj.name;
@@ -20,8 +15,12 @@ function startScan() {
 			  var mycluesequence = obj.age;
 			  //form JSON string
 			  var myscanJSON = '{"name":"' + myeventid + '","age":"' + mycluesequence + '"}';
-			  //return JSON string
-			  return myscanJSON;
+			 
+            //var s = "Result: " + result.text + "<br/>" +
+            //"Format: " + result.format + "<br/>" +
+            //"Cancelled: " + result.cancelled;
+			
+            resultDiv.innerHTML = myscanJSON;
 			
         },
         function (error) {
